@@ -417,6 +417,29 @@ p {
   font-size: 0.9rem;
 }
 
+.ne-form-status {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(22, 163, 74, 0.12);
+  color: #166534;
+  font-weight: 600;
+}
+
+.ne-form-status.is-error {
+  background: rgba(220, 38, 38, 0.12);
+  color: #991b1b;
+}
+
+.ne-honey {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
 .ne-contact-side {
   background: var(--ne-white);
   border-radius: 14px;

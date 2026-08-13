@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 
 type RouteKey = "home" | "products" | "services" | "contact";
 
@@ -465,7 +465,64 @@ function ServicesPage() {
   );
 }
 
+const WEB3FORMS_ACCESS_KEY = "f1beb110-8892-427a-b77e-701db1bd3ac9";
+
 function ContactPage() {
+  const [status, setStatus] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    if (String(data.get("botcheck") || "")) {
+      setIsError(false);
+      setStatus("Message sent. We will get back to you soon.");
+      form.reset();
+      return;
+    }
+
+    setIsSending(true);
+    setIsError(false);
+    setStatus("Sending...");
+
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: "New enquiry from National Enterprises website",
+      from_name: "National Enterprises Website",
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+      botcheck: false,
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || "Send failed");
+      }
+
+      form.reset();
+      setStatus("Message sent. We will get back to you soon.");
+    } catch (error) {
+      setIsError(true);
+      setStatus(error instanceof Error ? error.message : "Could not send the message.");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
   return (
     <>
       <section className="ne-section ne-contact-hero">
@@ -477,15 +534,16 @@ function ContactPage() {
 
       <section className="ne-section ne-section-light">
         <div className="ne-container ne-contact-grid ne-fade-up">
-          <form
-            className="ne-contact-form"
-            action="https://formsubmit.co/info@national-enterprise.com"
-            method="POST"
-          >
+          <form className="ne-contact-form" onSubmit={handleSubmit}>
             <h2>Submit Your Inquiry</h2>
 
-            <input type="hidden" name="_subject" value="New Query from National Enterprises Website" />
-            <input type="hidden" name="_captcha" value="false" />
+            {status ? (
+              <p className={`ne-form-status${isError ? " is-error" : ""}`} role="status">
+                {status}
+              </p>
+            ) : null}
+
+            <input type="checkbox" name="botcheck" className="ne-honey" tabIndex={-1} autoComplete="off" />
 
             <label htmlFor="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Enter your full name" required />
@@ -499,13 +557,9 @@ function ContactPage() {
             <label htmlFor="message">Message</label>
             <textarea id="message" name="message" rows={5} placeholder="Type your message" required />
 
-            <button type="submit" className="ne-btn">
-              Submit Inquiry
+            <button type="submit" className="ne-btn" disabled={isSending}>
+              {isSending ? "Sending..." : "Submit Inquiry"}
             </button>
-
-            <p className="ne-form-note">
-              Update the form action email once and all queries will be delivered there.
-            </p>
           </form>
 
           <aside className="ne-contact-side">
