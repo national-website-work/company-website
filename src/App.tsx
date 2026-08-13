@@ -71,6 +71,110 @@ const products = [
   },
 ];
 
+type ServiceItem = {
+  slug: string;
+  title: string;
+  short: string;
+  hero: string;
+  overview: string[];
+  offerings: string[];
+  audience: string;
+  image: string;
+};
+
+const services: ServiceItem[] = [
+  {
+    slug: "chemical-manufacturing",
+    title: "Chemical Manufacturing",
+    short: "End-to-end production with quality-controlled formulation standards.",
+    hero: "Reliable manufacturing for household and commercial cleaning products, built on 40+ years of chemical industry experience.",
+    overview: [
+      "National Enterprises manufactures detergents and cleaning solutions from our base in Roorkee, Uttarakhand. Production follows controlled formulation standards so quality stays consistent from sample lots to bulk dispatch.",
+      "We support both branded catalog products and partner requirements, with a focus on safety, batch consistency, and dependable timelines for dealers and B2B buyers.",
+    ],
+    offerings: [
+      "Detergent powder, floor cleaner, toilet cleaner, and handwash production",
+      "Formulation control for consistent fragrance, strength, and finish",
+      "Pack sizes for retail, wholesale, and bulk demand",
+      "Quality checks across mixing, filling, and dispatch",
+    ],
+    audience: "Dealers, distributors, private-label partners, and businesses that need a stable manufacturing source for laundry and cleaning products.",
+    image: "/images/about_us.png",
+  },
+  {
+    slug: "import-export",
+    title: "Chemical Import & Export",
+    short: "Sourcing and trade support across domestic chemical markets.",
+    hero: "Practical trade support for chemical sourcing, supply coordination, and partner movement across markets.",
+    overview: [
+      "We help businesses source and move chemical inputs with the same industry knowledge that sits behind our manufacturing work. The focus is reliable supply, clear communication, and workable commercial terms.",
+      "This is a grounded trade service — not a complex global logistics pitch. We coordinate requirements, availability, and partner connections so buyers and sellers can move with fewer delays.",
+    ],
+    offerings: [
+      "Sourcing support for chemical and cleaning-related materials",
+      "Coordination with suppliers and domestic trade partners",
+      "Requirement matching for quantity, grade, and delivery window",
+      "Ongoing support after the first order",
+    ],
+    audience: "Manufacturers, traders, and B2B buyers who need a trusted chemical-industry partner for sourcing and supply.",
+    image: "/images/raw_materials.png",
+  },
+  {
+    slug: "pharma-consultancy",
+    title: "Pharma Consultancy",
+    short: "Practical guidance for pharma-related business and compliance questions.",
+    hero: "Domain-backed consultancy for pharma-related requirements, kept at a clear and usable level.",
+    overview: [
+      "Our pharma consultancy draws on chemical-industry experience and specialist support. We help businesses understand requirements, documentation needs, and next steps without overcomplicating the conversation.",
+      "Engagements stay practical: what is needed, who should be involved, and how to move forward with compliance and quality in mind.",
+    ],
+    offerings: [
+      "Guidance on pharma-related business requirements",
+      "Support on process, documentation, and quality expectations",
+      "Introductions to relevant domain expertise where needed",
+      "Clear recommendations for small and growing operators",
+    ],
+    audience: "Founders, plant teams, and businesses that need pharma-adjacent advice without a heavy consulting overlay.",
+    image: "/images/about_us.png",
+  },
+  {
+    slug: "b2b-services",
+    title: "B2B Services",
+    short: "Partner support from first enquiry through repeat supply.",
+    hero: "Dedicated coordination for business partners who need products, supply, and a reliable point of contact.",
+    overview: [
+      "B2B work at National Enterprises is built around long-term supply relationships. We help partners with product selection, bulk requirements, and ongoing coordination so orders do not stall on price, MOQ, or availability.",
+      "You get one team to talk to — for catalog products, manufacturing support, and follow-up after dispatch.",
+    ],
+    offerings: [
+      "Bulk and dealer supply coordination",
+      "MOQ, pricing, and availability discussions",
+      "Repeat-order support for distributors and businesses",
+      "A single contact path across WhatsApp, form, email, and phone",
+    ],
+    audience: "Wholesalers, retailers, institutions, and companies that want a manufacturing partner rather than a one-time seller.",
+    image: "/images/loose_product.png",
+  },
+  {
+    slug: "marketing-advertising",
+    title: "Marketing & Advertising",
+    short: "Simple online and offline promotion support for growing brands.",
+    hero: "Practical marketing help so small and growing businesses can present products clearly — online and offline.",
+    overview: [
+      "We support partners who need basic, useful marketing — product presentation, local promotion, and digital visibility — without an agency-style overlay.",
+      "The aim is to help products get seen by the right buyers: dealers, retailers, and end customers who already look for cleaning and chemical supplies.",
+    ],
+    offerings: [
+      "Product presentation support for catalogs and listings",
+      "Guidance for local and dealer-facing promotion",
+      "Basic digital visibility support",
+      "Coordination between product, pricing enquiry, and outreach",
+    ],
+    audience: "Small manufacturers, dealers, and growing brands that need straightforward marketing support alongside supply.",
+    image: "/images/banner_all.png",
+  },
+];
+
 function getRouteFromHash(hash: string): RouteKey {
   const cleanHash = hash.replace("#", "").toLowerCase();
 
@@ -80,14 +184,119 @@ function getRouteFromHash(hash: string): RouteKey {
   return "home";
 }
 
+function getServiceSlug(hash: string): string | null {
+  const cleanHash = hash.replace("#", "").toLowerCase();
+  const match = cleanHash.match(/^\/services\/([a-z0-9-]+)/);
+  if (!match) return null;
+  return services.some((service) => service.slug === match[1]) ? match[1] : null;
+}
+
 function getRouteHref(route: RouteKey) {
   if (route === "home") return "#/";
   return `#/${route}`;
 }
 
-function createWhatsappLink(productName: string) {
-  const text = `Hi National Enterprises, I am Interested in your Product ${productName}, what's the price for this Product.`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+const CONTACT_EMAIL = "info@national-enterprise.com";
+const CONTACT_PHONE = "+91 7457843044";
+const CONTACT_PHONE_TEL = "+917457843044";
+
+const CATALOG_WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  "Hi National Enterprises, I want to know about price, MOQ, and availability of your products.",
+)}`;
+
+const WEB3FORMS_ACCESS_KEY = "f1beb110-8892-427a-b77e-701db1bd3ac9";
+
+function EnquiryForm({
+  title = "Submit Your Inquiry",
+  idPrefix = "",
+}: {
+  title?: string;
+  idPrefix?: string;
+}) {
+  const [status, setStatus] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    if (String(data.get("botcheck") || "")) {
+      setIsError(false);
+      setStatus("Message sent. We will get back to you soon.");
+      form.reset();
+      return;
+    }
+
+    setIsSending(true);
+    setIsError(false);
+    setStatus("Sending...");
+
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: "New enquiry from National Enterprises website",
+      from_name: "National Enterprises Website",
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      message: String(data.get("message") || "").trim(),
+      botcheck: false,
+    };
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || "Send failed");
+      }
+
+      form.reset();
+      setStatus("Message sent. We will get back to you soon.");
+    } catch (error) {
+      setIsError(true);
+      setStatus(error instanceof Error ? error.message : "Could not send the message.");
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  return (
+    <form className="ne-contact-form" onSubmit={handleSubmit}>
+      <h2>{title}</h2>
+
+      {status ? (
+        <p className={`ne-form-status${isError ? " is-error" : ""}`} role="status">
+          {status}
+        </p>
+      ) : null}
+
+      <input type="checkbox" name="botcheck" className="ne-honey" tabIndex={-1} autoComplete="off" />
+
+      <label htmlFor={`${idPrefix}name`}>Name</label>
+      <input id={`${idPrefix}name`} name="name" type="text" placeholder="Enter your full name" required />
+
+      <label htmlFor={`${idPrefix}email`}>Email</label>
+      <input id={`${idPrefix}email`} name="email" type="email" placeholder="Enter your email address" required />
+
+      <label htmlFor={`${idPrefix}phone`}>Phone</label>
+      <input id={`${idPrefix}phone`} name="phone" type="tel" placeholder="Enter your phone number" required />
+
+      <label htmlFor={`${idPrefix}message`}>Message</label>
+      <textarea id={`${idPrefix}message`} name="message" rows={5} placeholder="Type your message" required />
+
+      <button type="submit" className="ne-btn" disabled={isSending}>
+        {isSending ? "Sending..." : "Submit Inquiry"}
+      </button>
+    </form>
+  );
 }
 
 function Header({ activeRoute }: { activeRoute: RouteKey }) {
@@ -110,13 +319,15 @@ function Header({ activeRoute }: { activeRoute: RouteKey }) {
               </a>
             </li>
             <li className="ne-nav-dropdown">
-              <span className={activeRoute === "services" ? "active" : ""}>Services</span>
+              <a className={activeRoute === "services" ? "active" : ""} href="#/services">
+                Services
+              </a>
               <div className="ne-nav-dropdown-menu">
-                <a href="#/services/chemical-manufacturing">Chemical Manufacturing</a>
-                <a href="#/services/import-export">Chemical Import &amp; Export</a>
-                <a href="#/services/pharma-consultancy">Pharma Consultancy</a>
-                <a href="#/services/b2b-services">B2B Services</a>
-                <a href="#/services/marketing-advertising">Marketing &amp; Advertising</a>
+                {services.map((service) => (
+                  <a key={service.slug} href={`#/services/${service.slug}`}>
+                    {service.title}
+                  </a>
+                ))}
               </div>
             </li>
             <li>
@@ -237,25 +448,25 @@ function HomePage() {
               <div className="ne-icon" aria-hidden="true">A</div>
               <h3>Chemical Manufacturing</h3>
               <p>End-to-End production capabilities built on quality-controlled formulation standards.</p>
-              <a className="ne-btn" href="#/services">Learn More</a>
+              <a className="ne-btn" href="#/services/chemical-manufacturing">Learn More</a>
             </article>
             <article>
               <div className="ne-icon" aria-hidden="true">B</div>
               <h3>Chemical Import &amp; Export</h3>
               <p>Reliable sourcing and trade partnerships across all over the domestic markets.</p>
-              <a className="ne-btn" href="#/about">Learn More</a>
+              <a className="ne-btn" href="#/services/import-export">Learn More</a>
             </article>
             <article>
               <div className="ne-icon" aria-hidden="true">C</div>
               <h3>Pharma Consultancy</h3>
               <p>Specialized guidance for pharma-related requirements backed by deep domain Experts.</p>
-              <a className="ne-btn" href="#/about">Learn More</a>
+              <a className="ne-btn" href="#/services/pharma-consultancy">Learn More</a>
             </article>
             <article>
               <div className="ne-icon" aria-hidden="true">D</div>
               <h3>B2B Services</h3>
               <p>Dedicated support and coordination for Business partners at every stage of growth.</p>
-              <a className="ne-btn" href="#/about">Learn More</a>
+              <a className="ne-btn" href="#/services/b2b-services">Learn More</a>
             </article>
           </div>
         </div>
@@ -381,16 +592,84 @@ function ProductsPage() {
                   ) : (
                     <p>{product.description}</p>
                   )}
-
-                  <a
-                    className="ne-btn ne-btn-green"
-                    href={createWhatsappLink(product.name)}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Ask for Price
-                  </a>
                 </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="ne-section ne-section-light" id="product-enquiry">
+        <div className="ne-container">
+          <div className="ne-enquiry-band">
+            <div className="ne-enquiry-copy">
+              <h2>Price, MOQ &amp; Availability</h2>
+              <p>
+                If you have any query about price, MOQ, availability, etc., then feel free to reach
+                out. You can fill the form, message us on WhatsApp, email us, or use our contact
+                details — whichever works best for you.
+              </p>
+            </div>
+
+            <div className="ne-contact-grid">
+              <EnquiryForm title="Send an enquiry" idPrefix="product-" />
+
+              <aside className="ne-contact-side">
+                <h2>Reach out</h2>
+                <p>WhatsApp, email, and contact options are all available here.</p>
+
+                <a
+                  className="ne-btn ne-btn-green ne-enquiry-whatsapp"
+                  href={CATALOG_WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp us
+                </a>
+
+                <p>
+                  <strong>Email:</strong>{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                </p>
+                <p>
+                  <strong>Contact:</strong>{" "}
+                  <a href={`tel:${CONTACT_PHONE_TEL}`}>{CONTACT_PHONE}</a>
+                </p>
+                <p>
+                  <a href="#/contact">Open the Contact page</a>
+                </p>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+function ServicesIndexPage() {
+  return (
+    <>
+      <section className="ne-section ne-page-title ne-section-light">
+        <div className="ne-container ne-fade-up">
+          <p className="ne-breadcrumb">Home / Services</p>
+          <h1>Our Services</h1>
+          <p>
+            Beyond manufacturing, we bring decades of chemical industry expertise to a wider range of
+            business services. Open any service to see a full page for that offering.
+          </p>
+        </div>
+      </section>
+
+      <section className="ne-section">
+        <div className="ne-container">
+          <div className="ne-service-index-grid">
+            {services.map((service) => (
+              <article className="ne-service-index-card" key={service.slug}>
+                <h2>{service.title}</h2>
+                <p>{service.short}</p>
+                <a className="ne-btn" href={`#/services/${service.slug}`}>
+                  View service
+                </a>
               </article>
             ))}
           </div>
@@ -399,130 +678,119 @@ function ProductsPage() {
     </>
   );
 }
-function ServicesPage() {
+
+function ServiceDetailPage({ slug }: { slug: string }) {
+  const service = services.find((item) => item.slug === slug);
+  if (!service) return <ServicesIndexPage />;
+
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hi National Enterprises, I want to know more about ${service.title}.`,
+  )}`;
+  const otherServices = services.filter((item) => item.slug !== service.slug);
+
   return (
     <>
-      <section className="ne-section ne-page-title ne-section-light">
-        <div className="ne-container ne-fade-up">
-          <h1>Our Services</h1>
+      <section className="ne-section ne-service-hero">
+        <div className="ne-container ne-service-hero-grid ne-fade-up">
+          <div>
+            <p className="ne-breadcrumb">
+              <a href="#/">Home</a> / <a href="#/services">Services</a> / {service.title}
+            </p>
+            <h1>{service.title}</h1>
+            <p className="ne-service-lead">{service.hero}</p>
+            <div className="ne-service-hero-actions">
+              <a className="ne-btn" href="#/contact">
+                Enquire now
+              </a>
+              <a className="ne-btn ne-btn-green" href={whatsappHref} target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          <div className="ne-media-frame">
+            <img src={service.image} alt={service.title} />
+          </div>
+        </div>
+      </section>
+
+      <section className="ne-section ne-section-light">
+        <div className="ne-container ne-service-overview">
+          <h2>Overview</h2>
+          {service.overview.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
           <p>
-            Beyond manufacturing, we bring decades of chemical industry expertise to a wider range of
-            business services.
+            <strong>Who this is for:</strong> {service.audience}
           </p>
         </div>
       </section>
 
-      <section className="ne-section" id="chemical-manufacturing">
-        <div className="ne-container ne-fade-up">
-          <h2>Chemical Manufacturing</h2>
-          <p>
-            End-to-end production capabilities built on quality-controlled formulation standards,
-            supporting consistent output at scale for household and commercial cleaning products.
-          </p>
+      <section className="ne-section">
+        <div className="ne-container">
+          <h2 className="ne-section-title">What we offer</h2>
+          <div className="ne-offer-grid">
+            {service.offerings.map((item, index) => (
+              <article key={item}>
+                <div className="ne-icon" aria-hidden="true">
+                  {index + 1}
+                </div>
+                <p>{item}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="ne-section ne-section-light" id="import-export">
-        <div className="ne-container ne-fade-up">
-          <h2>Chemical Import &amp; Export</h2>
-          <p>
-            Reliable sourcing and trade partnerships across domestic and international markets, backed
-            by decades of hands-on chemical industry experience.
-          </p>
+      <section className="ne-section ne-section-light">
+        <div className="ne-container">
+          <div className="ne-enquiry-band">
+            <div className="ne-enquiry-copy">
+              <h2>Discuss this service</h2>
+              <p>
+                If you have a query about scope, pricing, MOQ, or availability, feel free to reach
+                out by form, WhatsApp, email, or phone.
+              </p>
+            </div>
+            <div className="ne-contact-grid">
+              <EnquiryForm title="Send an enquiry" idPrefix={`${service.slug}-`} />
+              <aside className="ne-contact-side">
+                <h2>Reach out</h2>
+                <a className="ne-btn ne-btn-green ne-enquiry-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer">
+                  WhatsApp us
+                </a>
+                <p>
+                  <strong>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                </p>
+                <p>
+                  <strong>Contact:</strong> <a href={`tel:${CONTACT_PHONE_TEL}`}>{CONTACT_PHONE}</a>
+                </p>
+                <p>
+                  <a href="#/contact">Open the Contact page</a>
+                </p>
+              </aside>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="ne-section" id="pharma-consultancy">
-        <div className="ne-container ne-fade-up">
-          <h2>Pharma Consultancy</h2>
-          <p>
-            Specialized guidance for pharma-related requirements, drawing on deep domain knowledge to
-            support compliance and business growth.
-          </p>
-        </div>
-      </section>
-
-      <section className="ne-section ne-section-light" id="b2b-services">
-        <div className="ne-container ne-fade-up">
-          <h2>B2B Services</h2>
-          <p>
-            Dedicated support and coordination for business partners at every stage — from sourcing to
-            scaling operations.
-          </p>
-        </div>
-      </section>
-
-      <section className="ne-section" id="marketing-advertising">
-        <div className="ne-container ne-fade-up">
-          <h2>Marketing &amp; Advertising</h2>
-          <p>
-            Practical marketing support to help small and growing businesses promote their products
-            effectively, both online and offline.
-          </p>
+      <section className="ne-section">
+        <div className="ne-container">
+          <h2 className="ne-section-title">Other services</h2>
+          <div className="ne-other-services">
+            {otherServices.map((item) => (
+              <a className="ne-other-service" href={`#/services/${item.slug}`} key={item.slug}>
+                <strong>{item.title}</strong>
+                <span>{item.short}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </>
   );
 }
 
-const WEB3FORMS_ACCESS_KEY = "f1beb110-8892-427a-b77e-701db1bd3ac9";
-
 function ContactPage() {
-  const [status, setStatus] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [isSending, setIsSending] = useState(false);
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
-    if (String(data.get("botcheck") || "")) {
-      setIsError(false);
-      setStatus("Message sent. We will get back to you soon.");
-      form.reset();
-      return;
-    }
-
-    setIsSending(true);
-    setIsError(false);
-    setStatus("Sending...");
-
-    const payload = {
-      access_key: WEB3FORMS_ACCESS_KEY,
-      subject: "New enquiry from National Enterprises website",
-      from_name: "National Enterprises Website",
-      name: String(data.get("name") || "").trim(),
-      email: String(data.get("email") || "").trim(),
-      phone: String(data.get("phone") || "").trim(),
-      message: String(data.get("message") || "").trim(),
-      botcheck: false,
-    };
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.message || "Send failed");
-      }
-
-      form.reset();
-      setStatus("Message sent. We will get back to you soon.");
-    } catch (error) {
-      setIsError(true);
-      setStatus(error instanceof Error ? error.message : "Could not send the message.");
-    } finally {
-      setIsSending(false);
-    }
-  }
-
   return (
     <>
       <section className="ne-section ne-contact-hero">
@@ -534,41 +802,15 @@ function ContactPage() {
 
       <section className="ne-section ne-section-light">
         <div className="ne-container ne-contact-grid ne-fade-up">
-          <form className="ne-contact-form" onSubmit={handleSubmit}>
-            <h2>Submit Your Inquiry</h2>
-
-            {status ? (
-              <p className={`ne-form-status${isError ? " is-error" : ""}`} role="status">
-                {status}
-              </p>
-            ) : null}
-
-            <input type="checkbox" name="botcheck" className="ne-honey" tabIndex={-1} autoComplete="off" />
-
-            <label htmlFor="name">Name</label>
-            <input id="name" name="name" type="text" placeholder="Enter your full name" required />
-
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="Enter your email address" required />
-
-            <label htmlFor="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" placeholder="Enter your phone number" required />
-
-            <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" rows={5} placeholder="Type your message" required />
-
-            <button type="submit" className="ne-btn" disabled={isSending}>
-              {isSending ? "Sending..." : "Submit Inquiry"}
-            </button>
-          </form>
+          <EnquiryForm />
 
           <aside className="ne-contact-side">
             <h2>Contact Details</h2>
             <p>
-              <strong>Email:</strong> info@national-enterprise.com
+              <strong>Email:</strong> <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
             <p>
-              <strong>Phone:</strong> +91 7457843044
+              <strong>Phone:</strong> <a href={`tel:${CONTACT_PHONE_TEL}`}>{CONTACT_PHONE}</a>
             </p>
             <p>
               <strong>Address:</strong> Bhagwanpur Roorkee 247661, India
@@ -585,6 +827,7 @@ function ContactPage() {
 
 export default function App() {
   const [route, setRoute] = useState<RouteKey>(() => getRouteFromHash(window.location.hash));
+  const [serviceSlug, setServiceSlug] = useState<string | null>(() => getServiceSlug(window.location.hash));
 
   useEffect(() => {
     if (!window.location.hash) {
@@ -593,6 +836,7 @@ export default function App() {
 
     const onHashChange = () => {
       setRoute(getRouteFromHash(window.location.hash));
+      setServiceSlug(getServiceSlug(window.location.hash));
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -602,10 +846,12 @@ export default function App() {
 
   const page = useMemo(() => {
     if (route === "products") return <ProductsPage />;
-    if (route === "services") return <ServicesPage />;
+    if (route === "services") {
+      return serviceSlug ? <ServiceDetailPage slug={serviceSlug} /> : <ServicesIndexPage />;
+    }
     if (route === "contact") return <ContactPage />;
     return <HomePage />;
-  }, [route]);
+  }, [route, serviceSlug]);
 
   return (
     <div className="ne-app">

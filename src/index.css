@@ -303,7 +303,43 @@ p {
 }
 
 .ne-product-content p {
-  margin: 10px 0 16px;
+  margin: 10px 0 0;
+}
+
+.ne-enquiry-band {
+  background: var(--ne-white);
+  border-radius: 18px;
+  box-shadow: var(--ne-shadow);
+  padding: 36px 32px;
+  display: grid;
+  gap: 28px;
+}
+
+.ne-enquiry-kicker {
+  margin: 0 0 8px;
+  color: var(--ne-blue-medium);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.ne-enquiry-copy h2 {
+  margin: 0 0 10px;
+  color: var(--ne-blue-dark);
+}
+
+.ne-enquiry-copy p {
+  margin: 0;
+  max-width: 720px;
+  color: var(--ne-text-soft);
+}
+
+.ne-enquiry-whatsapp {
+  display: inline-flex;
+  margin: 8px 0 16px;
+  text-align: center;
+  justify-content: center;
 }
 
 .ne-two-col {
@@ -550,7 +586,10 @@ p {
   .ne-two-col,
   .ne-contact-grid,
   .ne-footer-grid,
-  .ne-why-grid {
+  .ne-why-grid,
+  .ne-service-hero-grid,
+  .ne-service-index-grid,
+  .ne-offer-grid {
     grid-template-columns: 1fr;
   }
 
@@ -590,6 +629,12 @@ p {
 
   .ne-hero-media {
     max-width: 800px;
+  }
+
+  .ne-other-services,
+  .ne-service-index-grid,
+  .ne-offer-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -737,4 +782,104 @@ p {
 
 .ne-nav-dropdown-menu a:hover {
   background: #eaf3ff;
+}
+
+.ne-breadcrumb {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: var(--ne-text-soft);
+}
+
+.ne-breadcrumb a {
+  color: var(--ne-blue-medium);
+}
+
+.ne-service-hero {
+  padding-top: 48px;
+}
+
+.ne-service-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.ne-service-lead {
+  font-size: 1.08rem;
+  max-width: 640px;
+}
+
+.ne-service-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.ne-service-overview {
+  max-width: 860px;
+}
+
+.ne-service-overview p {
+  margin: 0 0 14px;
+}
+
+.ne-service-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.ne-service-index-card {
+  background: var(--ne-white);
+  border: 1px solid rgba(30, 129, 176, 0.18);
+  border-radius: 14px;
+  box-shadow: var(--ne-shadow);
+  padding: 24px;
+}
+
+.ne-service-index-card h2 {
+  margin: 0 0 10px;
+  color: var(--ne-blue-dark);
+}
+
+.ne-service-index-card .ne-btn {
+  margin-top: 16px;
+}
+
+.ne-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ne-offer-grid article {
+  background: var(--ne-bg-light);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.ne-other-services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ne-other-service {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(30, 129, 176, 0.18);
+  background: var(--ne-white);
+}
+
+.ne-other-service:hover {
+  border-color: var(--ne-blue-medium);
+}
+
+.ne-other-service strong {
+  color: var(--ne-blue-dark);
 }
