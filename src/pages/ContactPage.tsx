@@ -84,8 +84,8 @@ export function ContactPage() {
             {/* Embedded Interactive Google Map */}
             <div className="ne-map-wrapper">
               <iframe
-                title="National Enterprises Manufacturing Plant Bhagwanpur Roorkee"
-                src="https://maps.google.com/maps?q=National+Enterprises,+Near+Toll+Plaza,+Bhagwanpur,+Roorkee+29.927455,77.822093&hl=en&z=16&output=embed"
+                title="National Enterprises Exact Location Bhagwanpur Roorkee"
+                src="https://maps.google.com/maps?q=29.927455,77.822093&hl=en&z=17&output=embed"
                 width="100%"
                 height="320"
                 style={{ border: 0, borderRadius: "12px" }}
