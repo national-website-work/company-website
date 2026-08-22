@@ -31,7 +31,20 @@ html,
 body,
 #root {
   margin: 0;
+  padding: 0;
   min-height: 100%;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.ne-app {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 html {
@@ -52,19 +65,42 @@ a {
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
 /* Layout Containers */
 .ne-container {
-  width: min(1320px, 94%);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .ne-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ne-container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 .ne-narrow {
-  width: min(840px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .ne-section {
@@ -354,36 +390,59 @@ img {
   gap: 12px;
 }
 
+/* Quick Mobile WhatsApp Header Icon */
+.ne-mobile-quick-wa {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #25d366;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  text-decoration: none !important;
+}
+
 /* Mobile Menu Button */
 .ne-mobile-menu-btn {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
-  width: 36px;
-  height: 36px;
-  background: transparent;
-  border: none;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  background: #f0f7ff;
+  border: 1px solid #bae6fd;
+  border-radius: 10px;
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
   z-index: 1010;
+  transition: all 0.2s ease;
+}
+
+.ne-mobile-menu-btn:hover {
+  background: #e0f2fe;
 }
 
 .ne-burger-line {
-  width: 100%;
-  height: 3px;
-  background: var(--ne-blue-navy);
+  width: 22px;
+  height: 2.5px;
+  background: var(--ne-blue-dark);
   border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .ne-burger-line.open:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
+  transform: translateY(7.5px) rotate(45deg);
 }
 .ne-burger-line.open:nth-child(2) {
   opacity: 0;
 }
 .ne-burger-line.open:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
 /* Mobile Drawer */
@@ -2520,9 +2579,13 @@ img {
   .ne-enquiry-band,
   .ne-contact-main-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
   }
   .ne-service-index-card-rich {
     grid-template-columns: 1fr;
+  }
+  .ne-trust-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -2533,14 +2596,54 @@ img {
   .ne-btn-header-cta {
     display: none;
   }
+  .ne-mobile-quick-wa {
+    display: flex;
+  }
   .ne-mobile-menu-btn {
     display: flex;
   }
+  .ne-logo-img {
+    height: 38px;
+  }
   .ne-section {
-    padding: 50px 0;
+    padding: 44px 0;
   }
   .ne-hero {
-    padding: 36px 0 48px;
+    padding: 32px 0 42px;
+    text-align: center;
+  }
+  .ne-hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ne-hero-actions {
+    justify-content: center;
+  }
+  .ne-products-hero-actions {
+    justify-content: center;
+  }
+  .ne-service-hero-actions {
+    justify-content: center;
+  }
+  .ne-trust-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ne-product-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .ne-sample-kit-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+  .ne-sample-features {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .ne-service-rm-portfolio-grid {
+    grid-template-columns: 1fr;
   }
   .ne-form-row,
   .ne-rfq-buyer-info {
@@ -2548,6 +2651,16 @@ img {
   }
   .ne-footer-grid {
     grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .ne-footer-brand,
+  .ne-footer-contact {
+    align-items: center;
+    text-align: center;
+  }
+  .ne-footer-logo-box {
+    margin-left: auto;
+    margin-right: auto;
   }
   .ne-flex-header {
     flex-direction: column;
@@ -2557,6 +2670,41 @@ img {
   .ne-copyright-content {
     flex-direction: column;
     text-align: center;
+  }
+  .ne-filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ne-filter-pills {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ne-filter-pill {
+    flex-shrink: 0;
+  }
+  .ne-search-box {
+    width: 100%;
+  }
+  .ne-modal-content {
+    width: 95vw !important;
+    max-height: 90vh;
+    padding: 18px 16px;
+  }
+  .ne-rm-modal-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+  .ne-rm-search {
+    width: 100%;
+  }
+  .ne-rm-modal-body {
+    padding: 16px;
+  }
+  .ne-rm-grid {
+    grid-template-columns: 1fr;
   }
   .ne-mobile-sticky-bar {
     display: flex;
@@ -2622,5 +2770,33 @@ img {
     right: 16px;
     width: 48px;
     height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ne-section-title {
+    font-size: 1.55rem;
+  }
+  .ne-hero-content h1 {
+    font-size: 1.85rem;
+  }
+  .ne-page-hero h1 {
+    font-size: 1.7rem;
+  }
+  .ne-btn {
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+  .ne-btn-lg {
+    width: 100%;
+  }
+  .ne-hero-actions .ne-btn {
+    width: 100%;
+  }
+  .ne-products-hero-actions .ne-btn {
+    width: 100%;
+  }
+  .ne-service-hero-actions .ne-btn {
+    width: 100%;
   }
 }

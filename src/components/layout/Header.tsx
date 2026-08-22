@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { RouteKey } from "../../types";
 import { services } from "../../data/services";
+
+const WHATSAPP_NUMBER = "+917457843044";
 
 interface HeaderProps {
   activeRoute: RouteKey;
@@ -10,6 +12,17 @@ interface HeaderProps {
 export function Header({ activeRoute, onOpenRFQ }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
@@ -75,6 +88,20 @@ export function Header({ activeRoute, onOpenRFQ }: HeaderProps) {
             </button>
           )}
 
+          {/* Quick Mobile WhatsApp Icon */}
+          <a
+            className="ne-mobile-quick-wa"
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+              "Hi National Enterprises, I want to inquire about detergent products and raw materials rates."
+            )}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Direct WhatsApp Inquiry"
+          >
+            💬
+          </a>
+
+          {/* Mobile Menu Burger Button */}
           <button
             className="ne-mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -107,10 +134,10 @@ export function Header({ activeRoute, onOpenRFQ }: HeaderProps) {
               </li>
               <li>
                 <a className={activeRoute === "products" ? "active" : ""} href="#/products" onClick={closeMobileMenu}>
-                  🧴 All Products &amp; Catalog
+                  🧴 Products &amp; Raw Materials
                 </a>
               </li>
-              <li className="ne-drawer-category-title">OUR SERVICES:</li>
+              <li className="ne-drawer-category-title">OUR CORE SERVICES:</li>
               {services.map((service) => (
                 <li key={service.slug} className="ne-drawer-sublink">
                   <a href={`#/services/${service.slug}`} onClick={closeMobileMenu}>
@@ -140,11 +167,15 @@ export function Header({ activeRoute, onOpenRFQ }: HeaderProps) {
             )}
             <a
               className="ne-btn ne-btn-green ne-btn-block"
-              href="https://wa.me/+917457843044?text=Hi%20National%20Enterprises,%20I%20want%20to%20connect%20for%20business."
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                "Hi National Enterprises, I want to discuss dealership and bulk supply terms."
+              )}`}
               target="_blank"
               rel="noreferrer"
+              onClick={closeMobileMenu}
+              style={{ marginTop: "10px" }}
             >
-              💬 WhatsApp Direct Desk
+              💬 WhatsApp Factory Desk
             </a>
           </div>
         </div>

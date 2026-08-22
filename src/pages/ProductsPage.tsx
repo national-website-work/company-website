@@ -215,18 +215,18 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
         <div className="ne-container ne-sample-kit-grid">
           <div className="ne-sample-kit-copy">
             <span className="ne-tag">Dealer Verification Program</span>
-            <h2>Order a Physical Sample Verification Kit — ₹399</h2>
+            <h2>Order a Physical Sample Verification Kit — ₹300</h2>
             <p>
               Test our detergent foam height, stain removal power, fragrance retention, and floor cleaner shine in your own market before placing a full commercial order.
             </p>
             <ul className="ne-sample-features">
               <li>✓ 1KG &amp; 500GM (Pink Pack) Detergent, 500ML Toilet Cleaner, 1 Litre Floor Cleaner &amp; 250ML Handwash</li>
               <li>✓ Complete wholesale price list and margin breakdown included</li>
-              <li>✓ 🚚 Free Courier Delivery Across India (₹399 100% Adjusted in 1st Bulk Order)</li>
+              <li>✓ 🚚 Courier delivery charges as per your delivery pincode (₹300 Kit Cost 100% Adjusted in 1st Bulk Order)</li>
             </ul>
             {onOpenSampleKit && (
               <button className="ne-btn ne-btn-accent" onClick={onOpenSampleKit}>
-                📦 Request Dealer Sample Kit (₹399)
+                📦 Request Dealer Sample Kit (₹300 + Courier)
               </button>
             )}
           </div>
