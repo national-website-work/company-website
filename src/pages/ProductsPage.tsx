@@ -153,23 +153,25 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
 
                   <div className="ne-product-card-actions">
                     {product.isRawMaterialHub && onOpenRawMaterials ? (
-                      <div className="ne-hub-actions-stack">
+                      <div className="ne-card-dual-actions">
                         <button
                           type="button"
-                          className="ne-btn ne-btn-accent ne-btn-block"
+                          className="ne-btn ne-btn-accent ne-btn-sm"
                           onClick={onOpenRawMaterials}
+                          title="View all 16 chemical raw materials"
                         >
-                          🧪 View Available Raw Materials (16 Items)
+                          🧪 View List (16)
                         </button>
                         <a
-                          className="ne-btn ne-btn-green ne-btn-block"
+                          className="ne-btn ne-btn-green ne-btn-sm"
                           href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
                             "Hi National Enterprises, I want to inquire about bulk raw materials rates (Soda Ash, LABSA, Salt, SLES, Fragrance, etc.)."
                           )}`}
                           target="_blank"
                           rel="noreferrer"
+                          title="Inquire on WhatsApp"
                         >
-                          Inquire Raw Materials on WhatsApp
+                          💬 Inquire
                         </a>
                       </div>
                     ) : (
