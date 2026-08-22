@@ -7,9 +7,10 @@ const WHATSAPP_NUMBER = "+917457843044";
 
 interface ServiceDetailPageProps {
   slug: string;
+  onOpenRawMaterials?: () => void;
 }
 
-export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
+export function ServiceDetailPage({ slug, onOpenRawMaterials }: ServiceDetailPageProps) {
   const service = services.find((item) => item.slug === slug);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
@@ -23,6 +24,8 @@ export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
+
+  const isChemicalSourcing = service.slug === "chemical-sourcing";
 
   return (
     <div className="ne-service-detail-page">
@@ -40,9 +43,15 @@ export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
               <a className="ne-btn ne-btn-green" href={whatsappHref} target="_blank" rel="noreferrer">
                 💬 Discuss on WhatsApp
               </a>
-              <a className="ne-btn ne-btn-primary" href="#service-enquiry-section">
-                📋 Submit Service Inquiry
-              </a>
+              {isChemicalSourcing && onOpenRawMaterials ? (
+                <button className="ne-btn ne-btn-accent" onClick={onOpenRawMaterials}>
+                  🧪 View 16+ Raw Materials Catalog
+                </button>
+              ) : (
+                <a className="ne-btn ne-btn-primary" href="#service-enquiry-section">
+                  📋 Submit Service Inquiry
+                </a>
+              )}
             </div>
           </div>
           <div className="ne-media-frame ne-service-hero-media">
@@ -81,6 +90,132 @@ export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
           </div>
         </div>
       </section>
+
+      {/* DEDICATED RAW MATERIALS PORTFOLIO SECTION (For Chemical Sourcing Service) */}
+      {isChemicalSourcing && (
+        <section className="ne-section ne-service-rm-portfolio-section">
+          <div className="ne-container">
+            <div className="ne-section-header">
+              <span className="ne-tag">Chemical Inventory</span>
+              <h2 className="ne-section-title">Available Raw Materials for Laundry &amp; Cleaning Formulation</h2>
+              <p className="ne-section-subtitle">
+                Supplying verified high-purity chemicals in 50KG HDPE bags, 200KG sealed drums, and bulk tanker lots with batch-wise COA reports.
+              </p>
+            </div>
+
+            <div className="ne-service-rm-portfolio-grid">
+              {/* Category 1: Powders */}
+              <div className="ne-service-rm-col">
+                <div className="ne-service-rm-header">
+                  <span className="ne-service-rm-icon">🧱</span>
+                  <div>
+                    <h3>Powders &amp; Builders</h3>
+                    <span>7 Core Alkaline Ingredients</span>
+                  </div>
+                </div>
+                <ul className="ne-service-rm-list">
+                  <li>
+                    <strong>Soda Ash (Light &amp; Dense):</strong> 99.2% Pure alkaline builder &amp; water softener
+                  </li>
+                  <li>
+                    <strong>Industrial Salt (NaCl):</strong> Vacuum dried density builder &amp; costing filler
+                  </li>
+                  <li>
+                    <strong>Dolomite Powder:</strong> 300–400 mesh free-flowing anti-caking filler
+                  </li>
+                  <li>
+                    <strong>Trisodium Phosphate (TSP):</strong> Heavy-duty soil disperser &amp; grease cutter
+                  </li>
+                  <li>
+                    <strong>Detergent Premix:</strong> Ready-to-mix all-in-one booster compound
+                  </li>
+                  <li>
+                    <strong>Precipitated Silica:</strong> Machine anti-corrosion &amp; moisture absorber
+                  </li>
+                  <li>
+                    <strong>Caustic Soda Flakes:</strong> 99.5% Rayon grade neutralizing alkali
+                  </li>
+                </ul>
+              </div>
+
+              {/* Category 2: Liquids */}
+              <div className="ne-service-rm-col">
+                <div className="ne-service-rm-header">
+                  <span className="ne-service-rm-icon">💧</span>
+                  <div>
+                    <h3>Liquids &amp; Surfactants</h3>
+                    <span>7 High-Active Ingredients</span>
+                  </div>
+                </div>
+                <ul className="ne-service-rm-list">
+                  <li>
+                    <strong>Acid Slurry (LABSA 90%/96%):</strong> Primary anionic foaming &amp; cleaning active
+                  </li>
+                  <li>
+                    <strong>AOS Liquid (38% Active):</strong> Flash foam booster &amp; hard water active
+                  </li>
+                  <li>
+                    <strong>SLS Liquid / Needles:</strong> Heavy degreasing &amp; crystal clear lather base
+                  </li>
+                  <li>
+                    <strong>OT Paste:</strong> Super wetting agent for 3x faster fabric penetration
+                  </li>
+                  <li>
+                    <strong>Anti-Redeposition Polymer:</strong> Anti-graying shield for brilliant whites
+                  </li>
+                  <li>
+                    <strong>CVX / CBS-X (Tinopal):</strong> High-photostability fluorescent fabric whitener
+                  </li>
+                  <li>
+                    <strong>Laundry Perfumes:</strong> High-alkali stable Lemon, Jasmine &amp; Lavender oils
+                  </li>
+                </ul>
+              </div>
+
+              {/* Category 3: Specialty */}
+              <div className="ne-service-rm-col">
+                <div className="ne-service-rm-header">
+                  <span className="ne-service-rm-icon">✨</span>
+                  <div>
+                    <h3>Specialty Additives</h3>
+                    <span>2 Value-Add Ingredients</span>
+                  </div>
+                </div>
+                <ul className="ne-service-rm-list">
+                  <li>
+                    <strong>Multi-Enzyme Granules:</strong> Protease, Amylase &amp; Lipase for bio-stain breakdown
+                  </li>
+                  <li>
+                    <strong>Colored Soap Noodles:</strong> Blue, Red &amp; Green speckles for commercial shelf appeal
+                  </li>
+                </ul>
+                <div className="ne-service-rm-box-highlight">
+                  <strong>📦 Fast Dispatch from Roorkee:</strong>
+                  <span>Stock available for immediate loading across North India.</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="ne-service-rm-cta-center">
+              {onOpenRawMaterials && (
+                <button className="ne-btn ne-btn-accent ne-btn-lg" onClick={onOpenRawMaterials}>
+                  🧪 View Complete Specifications &amp; Request Spot Rates (16 Items) →
+                </button>
+              )}
+              <a
+                className="ne-btn ne-btn-green ne-btn-lg"
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  "Hi National Enterprises, I want to inquire about bulk raw materials supply (Soda Ash, LABSA, Salt, SLES, Fragrances, etc.). Please share today's factory spot rates."
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Inquire Raw Materials on WhatsApp
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 4-Step Process Flow Timeline */}
       <section className="ne-section">
@@ -169,7 +304,7 @@ export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
               <span className="ne-tag">Direct Consultation</span>
               <h2>Discuss Your Requirement with Our Chemical Desk</h2>
               <p>
-                Whether you need technical clarification, pricing estimates, formulation guidance, or pilot sample testing, our team in Roorkee is ready to assist you.
+                Whether you need technical clarification, spot pricing for raw chemicals, formulation guidance, or pilot sample testing, our team in Roorkee is ready to assist you.
               </p>
               <div className="ne-service-direct-box">
                 <a className="ne-btn ne-btn-green ne-btn-block" href={whatsappHref} target="_blank" rel="noreferrer">

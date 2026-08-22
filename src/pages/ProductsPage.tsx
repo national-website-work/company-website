@@ -7,9 +7,10 @@ const WHATSAPP_NUMBER = "+917457843044";
 interface ProductsPageProps {
   onOpenRFQ?: () => void;
   onOpenSampleKit?: () => void;
+  onOpenRawMaterials?: () => void;
 }
 
-export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) {
+export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }: ProductsPageProps) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -21,9 +22,7 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
         q === "" ||
         item.name.toLowerCase().includes(q) ||
         (item.description && item.description.toLowerCase().includes(q)) ||
-        (item.fragrance && item.fragrance.toLowerCase().includes(q)) ||
-        (item.formulationRole && item.formulationRole.toLowerCase().includes(q)) ||
-        (item.grade && item.grade.toLowerCase().includes(q));
+        (item.fragrance && item.fragrance.toLowerCase().includes(q));
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
@@ -41,23 +40,23 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
       <section className="ne-section ne-page-title ne-products-hero-section">
         <div className="ne-container ne-products-hero-grid ne-fade-up">
           <div>
-            <span className="ne-tag">Commercial Catalog &amp; Raw Material Hub</span>
-            <h1>Cleaning Products &amp; Chemical Raw Materials</h1>
+            <span className="ne-tag">Commercial Catalog &amp; Wholesale Supply</span>
+            <h1>Cleaning Products &amp; Raw Material Sourcing</h1>
             <p>
-              Direct factory wholesale supply for FMCG dealers, contract packers, and small soap/detergent manufacturers. From retail-ready MX Pure detergent powders to pure LABSA, Soda Ash, SLES, and industrial fragrances.
+              Direct factory supply for FMCG distributors, retailers, and small detergent manufacturing units. Explore our retail packs, commercial 5L containers, bulk loose powder, and 16+ high-purity chemical raw materials.
             </p>
             <div className="ne-products-hero-actions">
               <button className="ne-btn ne-btn-primary" onClick={handleDownloadCatalog}>
                 📄 Download Catalog / Rate List (PDF)
               </button>
+              {onOpenRawMaterials && (
+                <button className="ne-btn ne-btn-accent" onClick={onOpenRawMaterials}>
+                  🧪 View Available Raw Materials (16 Items)
+                </button>
+              )}
               {onOpenRFQ && (
                 <button className="ne-btn ne-btn-secondary" onClick={onOpenRFQ}>
                   📋 Build Bulk RFQ Quote
-                </button>
-              )}
-              {onOpenSampleKit && (
-                <button className="ne-btn ne-btn-accent" onClick={onOpenSampleKit}>
-                  📦 Order Sample Box
                 </button>
               )}
             </div>
@@ -91,7 +90,7 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
             <div className="ne-search-box">
               <input
                 type="text"
-                placeholder="Search products, chemical names, LABSA, Soda, Salt, Enzymes..."
+                placeholder="Search products, sizes, fragrances..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="ne-search-input"
@@ -107,25 +106,16 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
           {/* Product Cards Grid */}
           <div className="ne-product-grid">
             {filteredProducts.map((product) => (
-              <article className="ne-product-card" key={product.id}>
+              <article
+                className={`ne-product-card ${product.isRawMaterialHub ? "ne-card-raw-material-hub" : ""}`}
+                key={product.id}
+              >
                 <div className="ne-product-img-wrap">
                   <img src={product.image} alt={product.name} loading="lazy" />
                   <span className="ne-product-cat-pill">{product.category}</span>
                 </div>
                 <div className="ne-product-content">
                   <h3>{product.name}</h3>
-
-                  {product.formulationRole && (
-                    <div className="ne-product-role-badge">
-                      🧪 <strong>Role:</strong> {product.formulationRole}
-                    </div>
-                  )}
-
-                  {product.grade && (
-                    <div className="ne-product-grade-badge">
-                      🔬 <strong>Grade/Assay:</strong> {product.grade}
-                    </div>
-                  )}
 
                   <div className="ne-product-specs">
                     {product.weight && (
@@ -162,16 +152,38 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
                   )}
 
                   <div className="ne-product-card-actions">
-                    <a
-                      className="ne-btn ne-btn-green ne-btn-block"
-                      href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                        `Hi National Enterprises, I want to inquire about factory spot price, MOQ, and batch COA for: ${product.name}`
-                      )}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Inquire on WhatsApp
-                    </a>
+                    {product.isRawMaterialHub && onOpenRawMaterials ? (
+                      <div className="ne-hub-actions-stack">
+                        <button
+                          type="button"
+                          className="ne-btn ne-btn-accent ne-btn-block"
+                          onClick={onOpenRawMaterials}
+                        >
+                          🧪 View Available Raw Materials (16 Items)
+                        </button>
+                        <a
+                          className="ne-btn ne-btn-green ne-btn-block"
+                          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                            "Hi National Enterprises, I want to inquire about bulk raw materials rates (Soda Ash, LABSA, Salt, SLES, Fragrance, etc.)."
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Inquire Raw Materials on WhatsApp
+                        </a>
+                      </div>
+                    ) : (
+                      <a
+                        className="ne-btn ne-btn-green ne-btn-block"
+                        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                          `Hi National Enterprises, I want to inquire about factory pricing, MOQ, and sample dispatch for: ${product.name}`
+                        )}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Inquire on WhatsApp
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>
@@ -180,7 +192,7 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
 
           {filteredProducts.length === 0 && (
             <div className="ne-no-results">
-              <p>No items found matching &ldquo;{searchQuery}&rdquo; in category &ldquo;{activeCategory}&rdquo;.</p>
+              <p>No products found matching &ldquo;{searchQuery}&rdquo; in category &ldquo;{activeCategory}&rdquo;.</p>
               <button
                 className="ne-btn ne-btn-outline"
                 onClick={() => {
@@ -201,9 +213,9 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
           <div className="ne-enquiry-band">
             <div className="ne-enquiry-copy">
               <span className="ne-tag">Direct Factory Sourcing</span>
-              <h2>Raw Material &amp; Finished Goods Pricing Desk</h2>
+              <h2>Price, MOQ &amp; Dealership Terms</h2>
               <p>
-                Whether you need a monthly contract allocation of LABSA/Soda Ash or require dealership terms for MX Pure products, contact our Bhagwanpur, Roorkee dispatch desk directly.
+                Interested in stocking MX Pure products in your region, ordering bulk unbranded detergent powder, or sourcing chemical raw materials? Contact our Roorkee dispatch office via WhatsApp, phone, or submit the form below.
               </p>
               <div className="ne-contact-quick-box">
                 <div className="ne-quick-item">
@@ -223,8 +235,8 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit }: ProductsPageProps) 
 
             <div className="ne-enquiry-form-wrapper">
               <EnquiryForm
-                title="Send Raw Material / Product Inquiry"
-                subtitle="Specify your required quantities, chemical grades, and destination godown location."
+                title="Send Product / Raw Material Inquiry"
+                subtitle="Specify your required quantities, packaging type, and target delivery city."
                 idPrefix="products-"
                 defaultSubject="Product & Raw Material Sourcing Inquiry"
               />

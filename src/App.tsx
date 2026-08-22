@@ -6,6 +6,7 @@ import { Footer } from "./components/layout/Footer";
 import { WhatsAppFAB } from "./components/common/WhatsAppFAB";
 import { RFQBuilderModal } from "./components/features/RFQBuilderModal";
 import { SampleKitModal } from "./components/features/SampleKitModal";
+import { RawMaterialsModal } from "./components/features/RawMaterialsModal";
 import { HomePage } from "./pages/HomePage";
 import { ProductsPage } from "./pages/ProductsPage";
 import { ServicesIndexPage } from "./pages/ServicesIndexPage";
@@ -37,6 +38,7 @@ export default function App() {
   const [serviceSlug, setServiceSlug] = useState<string | null>(() => getServiceSlug(window.location.hash));
   const [isRFQOpen, setIsRFQOpen] = useState(false);
   const [isSampleKitOpen, setIsSampleKitOpen] = useState(false);
+  const [isRawMaterialsOpen, setIsRawMaterialsOpen] = useState(false);
 
   useEffect(() => {
     if (!window.location.hash) {
@@ -59,12 +61,16 @@ export default function App() {
         <ProductsPage
           onOpenRFQ={() => setIsRFQOpen(true)}
           onOpenSampleKit={() => setIsSampleKitOpen(true)}
+          onOpenRawMaterials={() => setIsRawMaterialsOpen(true)}
         />
       );
     }
     if (route === "services") {
       return serviceSlug ? (
-        <ServiceDetailPage slug={serviceSlug} />
+        <ServiceDetailPage
+          slug={serviceSlug}
+          onOpenRawMaterials={() => setIsRawMaterialsOpen(true)}
+        />
       ) : (
         <ServicesIndexPage />
       );
@@ -102,6 +108,11 @@ export default function App() {
       <SampleKitModal
         isOpen={isSampleKitOpen}
         onClose={() => setIsSampleKitOpen(false)}
+      />
+
+      <RawMaterialsModal
+        isOpen={isRawMaterialsOpen}
+        onClose={() => setIsRawMaterialsOpen(false)}
       />
     </div>
   );

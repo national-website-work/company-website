@@ -5,9 +5,7 @@ export type ProductCategory =
   | "Liquid Cleaners"
   | "Toilet Care"
   | "Bulk & Loose"
-  | "Raw Materials - Powders"
-  | "Raw Materials - Liquids"
-  | "Specialty & Additives";
+  | "Raw Materials";
 
 export interface ProductItem {
   id: string;
@@ -18,11 +16,27 @@ export interface ProductItem {
   description?: string;
   image: string;
   moq?: string;
-  formulationRole?: string;
-  grade?: string;
   packingType?: string;
   features?: string[];
   isPopular?: boolean;
+  isRawMaterialHub?: boolean;
+}
+
+export type RawMaterialCategory =
+  | "Powders & Builders"
+  | "Liquids & Surfactants"
+  | "Specialty & Additives";
+
+export interface RawMaterialItem {
+  id: string;
+  name: string;
+  category: RawMaterialCategory;
+  formulationRole: string;
+  grade: string;
+  packingType: string;
+  moq: string;
+  description: string;
+  features: string[];
 }
 
 export interface ServiceProcessStep {

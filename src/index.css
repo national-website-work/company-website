@@ -121,15 +121,18 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
   border: 1px solid transparent;
-  white-space: nowrap;
+  line-height: 1.35;
+  white-space: normal;
+  word-break: normal;
 }
 
 .ne-btn-primary {
@@ -2053,6 +2056,295 @@ img {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+/* Raw Material Hub Card & Modal */
+.ne-card-raw-material-hub {
+  border: 2px solid var(--ne-blue-medium) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%) !important;
+  box-shadow: 0 8px 24px rgba(30, 129, 176, 0.15) !important;
+}
+
+.ne-hub-actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.ne-raw-materials-modal {
+  width: min(1080px, 95vw) !important;
+  max-height: 90vh;
+}
+
+.ne-rm-modal-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 28px;
+  background: var(--ne-bg-subtle);
+  border-bottom: 1px solid var(--ne-border);
+}
+
+.ne-rm-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ne-rm-tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--ne-border);
+  background: #ffffff;
+  color: var(--ne-text-soft);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ne-rm-tab:hover {
+  background: var(--ne-blue-light);
+  color: var(--ne-blue-navy);
+}
+
+.ne-rm-tab.is-active {
+  background: var(--ne-blue-navy);
+  color: #ffffff;
+  border-color: var(--ne-blue-navy);
+}
+
+.ne-rm-search {
+  position: relative;
+  width: min(300px, 100%);
+}
+
+.ne-rm-search input {
+  width: 100%;
+  padding: 8px 32px 8px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--ne-border);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.ne-rm-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.ne-rm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.ne-rm-card {
+  background: #ffffff;
+  border: 1px solid var(--ne-border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--ne-shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ne-rm-card:hover {
+  border-color: var(--ne-blue-medium);
+  box-shadow: var(--ne-shadow);
+  transform: translateY(-2px);
+}
+
+.ne-rm-card-header {
+  margin-bottom: 10px;
+}
+
+.ne-rm-category-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--ne-blue-light);
+  color: var(--ne-blue-navy);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.ne-rm-card h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ne-blue-dark);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ne-rm-role-box {
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 12px;
+}
+
+.ne-rm-role-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0369a1;
+  text-transform: uppercase;
+}
+
+.ne-rm-role-val {
+  font-size: 0.85rem;
+  color: #0c4a6e;
+  font-weight: 600;
+}
+
+.ne-rm-meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--ne-text-soft);
+  margin-bottom: 12px;
+  background: var(--ne-bg-light);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.ne-rm-meta-lbl {
+  font-weight: 700;
+  color: var(--ne-blue-dark);
+  margin-right: 4px;
+}
+
+.ne-rm-desc {
+  font-size: 0.85rem;
+  color: var(--ne-text-soft);
+  margin: 0 0 12px;
+  line-height: 1.45;
+  flex-grow: 1;
+}
+
+.ne-rm-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ne-rm-feat-tag {
+  font-size: 0.72rem;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.ne-rm-actions {
+  margin-top: auto;
+}
+
+/* Service Detail - Raw Materials Portfolio */
+.ne-service-rm-portfolio-section {
+  background: linear-gradient(180deg, var(--ne-bg-light) 0%, #ffffff 100%);
+  border-top: 1px solid var(--ne-border);
+  border-bottom: 1px solid var(--ne-border);
+}
+
+.ne-service-rm-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.ne-service-rm-col {
+  background: #ffffff;
+  border: 1px solid var(--ne-border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: var(--ne-shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.ne-service-rm-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--ne-border);
+}
+
+.ne-service-rm-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.ne-service-rm-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ne-blue-dark);
+  margin: 0;
+}
+
+.ne-service-rm-header span {
+  font-size: 0.78rem;
+  color: var(--ne-blue-medium);
+  font-weight: 600;
+}
+
+.ne-service-rm-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.ne-service-rm-list li {
+  font-size: 0.88rem;
+  color: var(--ne-text-soft);
+  line-height: 1.45;
+}
+
+.ne-service-rm-list strong {
+  color: var(--ne-blue-dark);
+  display: inline;
+}
+
+.ne-service-rm-box-highlight {
+  margin-top: 18px;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.82rem;
+  color: #0369a1;
+}
+
+.ne-service-rm-box-highlight strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.ne-service-rm-cta-center {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 /* Media Queries for Mobile Responsiveness */
