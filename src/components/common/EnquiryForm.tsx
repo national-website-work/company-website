@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { trackMetaLead } from "../../utils/analytics";
 
 const WEB3FORMS_ACCESS_KEY = "f1beb110-8892-427a-b77e-701db1bd3ac9";
 
@@ -73,6 +74,9 @@ export function EnquiryForm({
       }
 
       form.reset();
+      trackMetaLead("B2B Website Enquiry Form", {
+        inquiry_type: inquiryType,
+      });
       setStatus("✓ Inquiry submitted successfully! Our team will contact you shortly via Call/WhatsApp.");
       if (onSuccess) onSuccess();
     } catch (error) {

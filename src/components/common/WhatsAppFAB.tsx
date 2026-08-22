@@ -1,8 +1,14 @@
+import { trackMetaLead } from "../../utils/analytics";
+
 const WHATSAPP_NUMBER = "+917457843044";
 
 export function WhatsAppFAB({ message }: { message?: string }) {
   const defaultText = message || "Hi National Enterprises, I want to discuss price, MOQ, and product availability.";
   const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(defaultText)}`;
+
+  const handleClick = () => {
+    trackMetaLead("Floating WhatsApp Button Click", { location: "Floating FAB" });
+  };
 
   return (
     <aside aria-label="WhatsApp live chat support">
@@ -11,6 +17,7 @@ export function WhatsAppFAB({ message }: { message?: string }) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={handleClick}
         aria-label="Direct Chat on WhatsApp with National Enterprises"
       >
         <svg

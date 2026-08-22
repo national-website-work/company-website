@@ -4,6 +4,7 @@ import { services } from "./data/services";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import { WhatsAppFAB } from "./components/common/WhatsAppFAB";
+import { MobileStickyBar } from "./components/common/MobileStickyBar";
 import { RFQBuilderModal } from "./components/features/RFQBuilderModal";
 import { SampleKitModal } from "./components/features/SampleKitModal";
 import { RawMaterialsModal } from "./components/features/RawMaterialsModal";
@@ -96,6 +97,7 @@ export default function App() {
       <main>{page}</main>
 
       <WhatsAppFAB />
+      <MobileStickyBar />
 
       <Footer onOpenRFQ={() => setIsRFQOpen(true)} />
 

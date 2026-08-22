@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import { products, PRODUCT_CATEGORIES } from "../data/products";
 import { EnquiryForm } from "../components/common/EnquiryForm";
+import { BuyerTermsStrip } from "../components/common/BuyerTermsStrip";
+import { trackMetaLead } from "../utils/analytics";
 
 const WHATSAPP_NUMBER = "+917457843044";
 
@@ -28,10 +30,15 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
   }, [activeCategory, searchQuery]);
 
   const handleDownloadCatalog = () => {
+    trackMetaLead("PDF Catalog Download Click", { category: activeCategory });
     const text = encodeURIComponent(
       "Hi National Enterprises, please send me your latest PDF Product Catalog, Raw Material Price List, and Dealership Terms."
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank");
+  };
+
+  const handleProductWhatsAppClick = (productName: string) => {
+    trackMetaLead(`Product Inquire: ${productName}`, { product: productName });
   };
 
   return (
@@ -66,6 +73,9 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
           </div>
         </div>
       </section>
+
+      {/* B2B Buyer Terms & Dispatch Policy Strip */}
+      <BuyerTermsStrip />
 
       {/* Filter & Search Bar */}
       <section className="ne-section ne-products-filter-section">
@@ -114,24 +124,19 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
                   <img src={product.image} alt={product.name} loading="lazy" />
                   <span className="ne-product-cat-pill">{product.category}</span>
                 </div>
+
                 <div className="ne-product-content">
                   <h3>{product.name}</h3>
 
                   <div className="ne-product-specs">
                     {product.weight && (
-                      <span className="ne-spec-badge">
-                        ⚖️ <strong>Weight:</strong> {product.weight}
-                      </span>
+                      <span className="ne-spec-badge">⚖️ <strong>Weight:</strong> {product.weight}</span>
                     )}
                     {product.packingType && (
-                      <span className="ne-spec-badge">
-                        📦 <strong>Packing:</strong> {product.packingType}
-                      </span>
+                      <span className="ne-spec-badge">📦 <strong>Packing:</strong> {product.packingType}</span>
                     )}
                     {product.fragrance && (
-                      <span className="ne-spec-badge">
-                        🌸 <strong>Scent:</strong> {product.fragrance}
-                      </span>
+                      <span className="ne-spec-badge">🌸 <strong>Scent:</strong> {product.fragrance}</span>
                     )}
                   </div>
 
@@ -169,6 +174,7 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
                           )}`}
                           target="_blank"
                           rel="noreferrer"
+                          onClick={() => handleProductWhatsAppClick("Chemical Raw Materials Hub")}
                           title="Inquire on WhatsApp"
                         >
                           💬 Inquire
@@ -182,6 +188,7 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
                         )}`}
                         target="_blank"
                         rel="noreferrer"
+                        onClick={() => handleProductWhatsAppClick(product.name)}
                       >
                         Inquire on WhatsApp
                       </a>
@@ -194,14 +201,8 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
 
           {filteredProducts.length === 0 && (
             <div className="ne-no-results">
-              <p>No products found matching &ldquo;{searchQuery}&rdquo; in category &ldquo;{activeCategory}&rdquo;.</p>
-              <button
-                className="ne-btn ne-btn-outline"
-                onClick={() => {
-                  setActiveCategory("All");
-                  setSearchQuery("");
-                }}
-              >
+              <p>No products found matching &ldquo;{searchQuery}&rdquo;.</p>
+              <button className="ne-btn ne-btn-secondary" onClick={() => { setSearchQuery(""); setActiveCategory("All"); }}>
                 Reset Filters
               </button>
             </div>
@@ -209,41 +210,41 @@ export function ProductsPage({ onOpenRFQ, onOpenSampleKit, onOpenRawMaterials }:
         </div>
       </section>
 
-      {/* Inquiry Form Band */}
-      <section className="ne-section ne-section-light" id="product-enquiry">
-        <div className="ne-container">
-          <div className="ne-enquiry-band">
-            <div className="ne-enquiry-copy">
-              <span className="ne-tag">Direct Factory Sourcing</span>
-              <h2>Price, MOQ &amp; Dealership Terms</h2>
-              <p>
-                Interested in stocking MX Pure products in your region, ordering bulk unbranded detergent powder, or sourcing chemical raw materials? Contact our Roorkee dispatch office via WhatsApp, phone, or submit the form below.
-              </p>
-              <div className="ne-contact-quick-box">
-                <div className="ne-quick-item">
-                  <strong>📞 Call / WhatsApp:</strong>
-                  <a href="tel:+917457843044">+91 7457843044</a>
-                </div>
-                <div className="ne-quick-item">
-                  <strong>📧 Email:</strong>
-                  <a href="mailto:info@national-enterprise.com">info@national-enterprise.com</a>
-                </div>
-                <div className="ne-quick-item">
-                  <strong>🏭 Manufacturing Plant:</strong>
-                  <span>Bhagwanpur, Roorkee (247661), Uttarakhand</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="ne-enquiry-form-wrapper">
-              <EnquiryForm
-                title="Send Product / Raw Material Inquiry"
-                subtitle="Specify your required quantities, packaging type, and target delivery city."
-                idPrefix="products-"
-                defaultSubject="Product & Raw Material Sourcing Inquiry"
-              />
-            </div>
+      {/* Dealer Sample Box CTA Section */}
+      <section className="ne-section ne-sample-kit-band">
+        <div className="ne-container ne-sample-kit-grid">
+          <div className="ne-sample-kit-copy">
+            <span className="ne-tag">Dealer Verification Program</span>
+            <h2>Order a Physical Sample Verification Kit — ₹399</h2>
+            <p>
+              Test our detergent foam height, stain removal power, fragrance retention, and floor cleaner shine in your own market before placing a full commercial order.
+            </p>
+            <ul className="ne-sample-features">
+              <li>✓ 1KG &amp; 500GM (Pink Pack) Detergent, 500ML Toilet Cleaner, 1 Litre Floor Cleaner &amp; 250ML Handwash</li>
+              <li>✓ Complete wholesale price list and margin breakdown included</li>
+              <li>✓ 🚚 Free Courier Delivery Across India (₹399 100% Adjusted in 1st Bulk Order)</li>
+            </ul>
+            {onOpenSampleKit && (
+              <button className="ne-btn ne-btn-accent" onClick={onOpenSampleKit}>
+                📦 Request Dealer Sample Kit (₹399)
+              </button>
+            )}
           </div>
+          <div className="ne-sample-kit-media">
+            <img src="/images/banner_all.webp" alt="Dealer Sample Kit Box" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom Inquiry Form */}
+      <section className="ne-section">
+        <div className="ne-container ne-narrow">
+          <EnquiryForm
+            title="Wholesale Pricing &amp; Dealership Inquiry"
+            subtitle="Fill the form below to receive factory rates, distributor slab discounts, and delivery timelines."
+            idPrefix="products-page-"
+            defaultSubject="Product Catalog & Dealership Inquiry"
+          />
         </div>
       </section>
     </div>

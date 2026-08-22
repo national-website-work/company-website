@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { products } from "../../data/products";
+import { trackMetaLead } from "../../utils/analytics";
 
 const WHATSAPP_NUMBER = "+917457843044";
 
@@ -49,6 +50,11 @@ export function RFQBuilderModal({ isOpen, onClose }: RFQBuilderModalProps) {
 
   const handleWhatsAppSend = () => {
     if (totalItemsCount === 0) return;
+    trackMetaLead("Bulk RFQ Quotation Request", {
+      items_count: totalItemsCount,
+      buyer_name: buyerName,
+      delivery_city: buyerCity,
+    });
     const msg = generateWhatsAppMessage();
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");

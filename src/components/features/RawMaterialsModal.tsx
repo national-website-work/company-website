@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { rawMaterials, RAW_MATERIAL_CATEGORIES } from "../../data/rawMaterials";
 import type { RawMaterialCategory } from "../../types";
+import { trackMetaLead } from "../../utils/analytics";
 
 const WHATSAPP_NUMBER = "+917457843044";
 
@@ -130,6 +131,7 @@ export function RawMaterialsModal({ isOpen, onClose }: RawMaterialsModalProps) {
                     )}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackMetaLead(`Raw Material Inquire: ${rm.name}`, { chemical: rm.name })}
                   >
                     Get Factory Spot Rate on WhatsApp
                   </a>

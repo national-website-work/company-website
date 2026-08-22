@@ -1881,6 +1881,68 @@ img {
   gap: 12px;
 }
 
+/* Dealer Sample Kit Band on Products Page */
+.ne-sample-kit-band {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 50%, #ffffff 100%);
+  border-top: 1px solid #bae6fd;
+  border-bottom: 1px solid #bae6fd;
+  padding: 48px 0;
+}
+
+.ne-sample-kit-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.ne-sample-kit-copy h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  color: var(--ne-blue-dark);
+  margin: 8px 0 12px;
+}
+
+.ne-sample-kit-copy p {
+  font-size: 0.95rem;
+  color: var(--ne-text-soft);
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.ne-sample-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ne-sample-features li {
+  font-size: 0.9rem;
+  color: #0369a1;
+  font-weight: 600;
+}
+
+.ne-sample-kit-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ne-sample-kit-media img {
+  max-height: 280px;
+  max-width: 440px;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(13, 59, 102, 0.15);
+  background: #ffffff;
+  padding: 12px;
+  border: 1px solid #bae6fd;
+}
+
 /* Sample Box Modal */
 .ne-sample-box-highlight {
   background: #fef5ea;
@@ -2394,6 +2456,56 @@ img {
   gap: 16px;
 }
 
+/* Buyer Terms Strip */
+.ne-buyer-terms-strip {
+  background: #f8fafc;
+  border-top: 1px solid var(--ne-border);
+  border-bottom: 1px solid var(--ne-border);
+  padding: 24px 0;
+}
+
+.ne-buyer-terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.ne-buyer-term-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--ne-border);
+  box-shadow: var(--ne-shadow-sm);
+}
+
+.ne-buyer-term-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ne-buyer-term-item strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--ne-blue-dark);
+  margin-bottom: 4px;
+}
+
+.ne-buyer-term-item p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ne-text-soft);
+  line-height: 1.4;
+}
+
+/* Mobile Sticky Bottom Action Bar */
+.ne-mobile-sticky-bar {
+  display: none;
+}
+
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 1024px) {
   .ne-footer-grid {
@@ -2445,5 +2557,70 @@ img {
   .ne-copyright-content {
     flex-direction: column;
     text-align: center;
+  }
+  .ne-mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2400;
+    background: #ffffff;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+    border-top: 1px solid var(--ne-border);
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .ne-mobile-sticky-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-size: 0.82rem;
+  }
+
+  .ne-sticky-call {
+    background: var(--ne-blue-dark);
+    color: #ffffff !important;
+  }
+
+  .ne-sticky-wa {
+    background: #25d366;
+    color: #ffffff !important;
+  }
+
+  .ne-sticky-icon {
+    font-size: 1.2rem;
+  }
+
+  .ne-sticky-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.15;
+  }
+
+  .ne-sticky-sub {
+    font-size: 0.65rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .ne-sticky-text strong {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .ne-whatsapp-fab {
+    bottom: 70px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
   }
 }
