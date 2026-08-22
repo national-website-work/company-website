@@ -1,14 +1,26 @@
 export type RouteKey = "home" | "products" | "services" | "contact";
 
+export type ProductCategory =
+  | "Detergent Powder"
+  | "Liquid Cleaners"
+  | "Toilet Care"
+  | "Bulk & Loose"
+  | "Raw Materials - Powders"
+  | "Raw Materials - Liquids"
+  | "Specialty & Additives";
+
 export interface ProductItem {
   id: string;
   name: string;
-  category: "Detergent Powder" | "Liquid Cleaners" | "Toilet Care" | "Bulk & Loose" | "Raw Materials";
+  category: ProductCategory;
   weight?: string;
   fragrance?: string;
   description?: string;
   image: string;
   moq?: string;
+  formulationRole?: string;
+  grade?: string;
+  packingType?: string;
   features?: string[];
   isPopular?: boolean;
 }

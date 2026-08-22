@@ -861,6 +861,28 @@ img {
   line-height: 1.35;
 }
 
+.ne-product-role-badge {
+  font-size: 0.8rem;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  border: 1px solid #bae6fd;
+}
+
+.ne-product-grade-badge {
+  font-size: 0.78rem;
+  background: #f0fdf4;
+  color: #15803d;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  border: 1px solid #bbf7d0;
+}
+
 .ne-product-specs {
   display: flex;
   flex-wrap: wrap;
