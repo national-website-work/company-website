@@ -3,12 +3,13 @@ import { EnquiryForm } from "../components/common/EnquiryForm";
 const CONTACT_EMAIL = "info@national-enterprise.com";
 const CONTACT_PHONE = "+91 7457843044";
 const CONTACT_PHONE_TEL = "+917457843044";
+const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/National+Enterprises/@29.927455,77.822093,17z";
 
 export function ContactPage() {
   return (
     <div className="ne-contact-page">
       {/* Hero */}
-      <section className="ne-section ne-page-title ne-section-light">
+      <section className="ne-section ne-page-hero">
         <div className="ne-container ne-fade-up">
           <p className="ne-breadcrumb">
             <a href="#/">Home</a> / <span>Contact &amp; Plant Location</span>
@@ -83,8 +84,8 @@ export function ContactPage() {
             {/* Embedded Interactive Google Map */}
             <div className="ne-map-wrapper">
               <iframe
-                title="National Enterprises Location Bhagwanpur Roorkee"
-                src="https://maps.google.com/maps?q=Bhagwanpur+Roorkee+Uttarakhand+247661&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                title="National Enterprises Manufacturing Plant Bhagwanpur Roorkee"
+                src="https://maps.google.com/maps?q=National+Enterprises,+Near+Toll+Plaza,+Bhagwanpur,+Roorkee+29.927455,77.822093&hl=en&z=16&output=embed"
                 width="100%"
                 height="320"
                 style={{ border: 0, borderRadius: "12px" }}
@@ -92,6 +93,16 @@ export function ContactPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
+            </div>
+            <div style={{ marginTop: "12px", textAlign: "right" }}>
+              <a
+                className="ne-footer-map-link"
+                href={GOOGLE_MAPS_SEARCH_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                📍 Open National Enterprises on Google Maps App →
+              </a>
             </div>
           </div>
 

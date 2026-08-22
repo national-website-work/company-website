@@ -4,7 +4,7 @@ export function ServicesIndexPage() {
   return (
     <div className="ne-services-page">
       {/* Page Header */}
-      <section className="ne-section ne-page-title ne-section-light">
+      <section className="ne-section ne-page-hero">
         <div className="ne-container ne-fade-up">
           <p className="ne-breadcrumb">
             <a href="#/">Home</a> / <span>Services &amp; Capabilities</span>
