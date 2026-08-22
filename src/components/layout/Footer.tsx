@@ -85,7 +85,7 @@ export function Footer({ onOpenRFQ }: { onOpenRFQ?: () => void }) {
             <p>
               <a
                 className="ne-footer-map-link"
-                href="https://www.google.com/maps/search/National+Enterprises/@29.927455,77.822093,17z"
+                href="https://maps.google.com/?q=29.927455,77.822093"
                 target="_blank"
                 rel="noreferrer"
               >

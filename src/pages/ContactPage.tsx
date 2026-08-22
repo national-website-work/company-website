@@ -3,7 +3,7 @@ import { EnquiryForm } from "../components/common/EnquiryForm";
 const CONTACT_EMAIL = "info@national-enterprise.com";
 const CONTACT_PHONE = "+91 7457843044";
 const CONTACT_PHONE_TEL = "+917457843044";
-const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/National+Enterprises/@29.927455,77.822093,17z";
+const GOOGLE_MAPS_DIRECT_URL = "https://maps.google.com/?q=29.927455,77.822093";
 
 export function ContactPage() {
   return (
@@ -85,7 +85,7 @@ export function ContactPage() {
             <div className="ne-map-wrapper">
               <iframe
                 title="National Enterprises Exact Location Bhagwanpur Roorkee"
-                src="https://maps.google.com/maps?q=29.927455,77.822093&hl=en&z=17&output=embed"
+                src="https://maps.google.com/maps?q=29.927455,77.822093&t=m&z=15&output=embed"
                 width="100%"
                 height="320"
                 style={{ border: 0, borderRadius: "12px" }}
@@ -97,11 +97,11 @@ export function ContactPage() {
             <div style={{ marginTop: "12px", textAlign: "right" }}>
               <a
                 className="ne-footer-map-link"
-                href={GOOGLE_MAPS_SEARCH_URL}
+                href={GOOGLE_MAPS_DIRECT_URL}
                 target="_blank"
                 rel="noreferrer"
               >
-                📍 Open National Enterprises on Google Maps App →
+                📍 Open Plant Location on Google Maps App →
               </a>
             </div>
           </div>
